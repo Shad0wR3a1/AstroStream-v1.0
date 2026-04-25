@@ -1,15 +1,8 @@
 <?php
 session_start();
-
-session_unset();     // Rimuove tutte le variabili di sessione
-session_destroy();   // Distrugge la sessione stessa
-session_start();     // La riapre pulita per permettere il nuovo login
-
-$conn = new mysqli("localhost", "root", "", "streaming_db");
-
-if ($conn->connect_error) {
-    die("Errore connessione: " . $conn->connect_error);
-}
+session_unset();
+session_destroy();
+session_start();
 
 $conn = new mysqli("localhost", "root", "", "streaming_db");
 
@@ -20,7 +13,6 @@ if ($conn->connect_error) {
 $errore = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -30,18 +22,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($user = $result->fetch_assoc()) {
+        // Controllo password
         if ($password == $user['password']) {
-                $_SESSION['email'] = $email;
-                header("Location: home.php");
-                exit();
+            
+            // --- LOGICA ADMIN ---
+            $_SESSION['email'] = $email;
+            
+            // Se is_admin è 1, lo impostiamo come true, altrimenti false
+            if ($user['is_admin'] == 1) {
+                $_SESSION['role'] = 'admin';
+            } else {
+                $_SESSION['role'] = 'user';
             }
-        else {
+            // --------------------
+
+            header("Location: home.php");
+            exit();
+        } else {
             $errore = "Password errata ❌";
         }
     } else {
         $errore = "Utente non trovato ❌";
     }
-
     $stmt->close();
 }
 ?>

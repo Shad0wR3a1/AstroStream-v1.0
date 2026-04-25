@@ -105,7 +105,7 @@ if ($dati_user) {
         .btn-action:hover { background: var(--star-gold); color: black; }
         footer { text-align: center; padding: 40px; color: #555; font-size: 0.8rem; }
 
-        /* --- STILI NUOVI: ASTROBOT POPUP --- */
+        /* --- ASTROBOT POPUP --- */
         #bot-launcher {
             position: fixed; bottom: 30px; right: 30px;
             width: 70px; height: 70px;

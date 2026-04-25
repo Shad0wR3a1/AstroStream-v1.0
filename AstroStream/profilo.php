@@ -141,6 +141,11 @@ $res_cards = $conn->query("SELECT * FROM carte_credito WHERE cod_u = $id_utente"
             <p style="font-size: 0.8rem; color: #aaa;">Accesso Standard: paga per singola visione.</p>
         <?php endif; ?>
         <a href="abbonamento.php" class="btn btn-outline">GESTISCI ABBONAMENTO</a>
+        <?php if (isset($user['is_admin']) && $user['is_admin'] == 1): ?>
+    <a href="admin.php" class="btn" style="background: #ff4d4d; color: white; border: 1px solid #ff4d4d; box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); margin-top: 15px;">
+        ⚡ ACCESSO AMMINISTRATORE
+    </a>
+<?php endif; ?>
     </div>
 
     <div class="card">
